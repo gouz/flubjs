@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: verdana;
+        background: #efefef;
+      }
+      #sandbox-wheel {
+      	text-align: center;
+        margin-top: 200px;
+      }
+      a {
+        text-align: center;
+        width: 40px; height: 40px;
+        line-height: 40px;
+        background: #368Bc1; color: #FFF;
+        font-weight: bold; font-size: 16px;
+        display: inline-block;
+        text-decoration: none;
+        border-radius:100%;
+        transform: translateZ(0);
+        transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        filter: url('#goo');
+      }
+      a:hover {
+        background: #333;
+        color:  #368Bc1;
+        transform:scale(1.1,1.1) translate3d(0,0,0);
+      }
+      #menu { display: none; }
+    </style>
+  </head>
+  <body>
+    <section id="sandbox-wheel">
+      <a id="launcher" href="#menu">A</a>
+      <ul id="menu">
+        <li>B</li>
+        <li>C</li>
+        <li>D</li>
+        <li>E</li>
+        <li>F</li>
+        <li>G</li>
+      </ul>
+    </section>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800">
+			  <defs>
+			    <filter id="goo">
+			      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+			      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+			      <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+			    </filter>
+			  </defs>
+			</svg>
+
+    <script src="../dist/flub.js"></script>
+    <script>
+      new Flub('#launcher');
+    </script>
+  </body>
+</html>

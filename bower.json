@@ -1,0 +1,25 @@
+{
+  "name": "flubjs",
+  "version": "0.0.1",
+  "homepage": "https://github.com/gouz/flubjs",
+  "authors": [
+    "GouZ <sylvain.gougouzian@gmail.com>"
+  ],
+  "description": "FlubJS : menu with gooey effect like Lucas Bebber",
+  "main": "dist/flub.js",
+  "keywords": [
+    "flub",
+    "menu",
+    "svn",
+    "goo",
+    "effect"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
