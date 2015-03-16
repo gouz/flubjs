@@ -65,6 +65,7 @@
         i.style.left = (this.button.left - radius) + 'px';
         i.style.top = (this.button.top - radius) + 'px';
         i.style.transition = 'all ease-out ' + (this.options.speed * (++c / items.length)) + 'ms';
+        i.style.transitionTimingFunction = "cubic-bezier(0.935, 0.000, 0.340, 1.330)";
       }
       cnst = Math.PI / 180;
       this.element;

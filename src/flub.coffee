@@ -59,6 +59,7 @@ class Flub
       i.style.left = (@button.left - radius) + 'px'
       i.style.top = (@button.top - radius) + 'px'
       i.style.transition = 'all ease-out ' + (@options.speed * (++c/items.length)) + 'ms'
+      i.style.transitionTimingFunction = "cubic-bezier(0.935, 0.000, 0.340, 1.330)"
     cnst = Math.PI / 180
     @element
     @element.addEventListener 'click', (e) =>
