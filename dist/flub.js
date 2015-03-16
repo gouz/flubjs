@@ -17,7 +17,7 @@
 
     Flub.prototype.makeFilter = function() {
       var svg;
-      svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <filter id="flub-shadow"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + this.button.radius / 2 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feGaussianBlur in="goo" stdDeviation="3" result="shadow" /> <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 0" result="shadow" /> <feOffset in="shadow" dx="1" dy="1" result="shadow" /> <feBlend in2="shadow" in="goo" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> <filter id="flub-goo"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + this.button.radius / 2 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> </defs> </svg>';
+      svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <filter id="flub-shadow"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + this.button.radius / 4 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feGaussianBlur in="goo" stdDeviation="3" result="shadow" /> <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 0" result="shadow" /> <feOffset in="shadow" dx="1" dy="1" result="shadow" /> <feBlend in2="shadow" in="goo" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> <filter id="flub-goo"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + this.button.radius / 4 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> </defs> </svg>';
       return document.write(svg);
     };
 
@@ -36,14 +36,16 @@
     };
 
     Flub.prototype.bind = function() {
-      var base, base1, cnst, i, items, j, k, len, len1, radius, rect, ref;
+      var base, base1, base2, c, cnst, i, items, j, k, len, len1, radius, rect, ref;
       if ((base = this.options).min == null) {
         base.min = 0;
       }
       if ((base1 = this.options).max == null) {
         base1.max = 360;
       }
-      this.options.speed = 200;
+      if ((base2 = this.options).speed == null) {
+        base2.speed = 200;
+      }
       items = [];
       this.element.style.position = 'relative';
       this.element.style.zIndex = 2;
@@ -57,17 +59,18 @@
       }
       rect = items[0].getBoundingClientRect();
       radius = (rect.right - rect.left) / 2;
+      c = 0;
       for (k = 0, len1 = items.length; k < len1; k++) {
         i = items[k];
         i.style.left = (this.button.left - radius) + 'px';
         i.style.top = (this.button.top - radius) + 'px';
-        i.style.transition = 'all ease-out ' + this.options.speed + 'ms';
+        i.style.transition = 'all ease-out ' + (this.options.speed * (++c / items.length)) + 'ms';
       }
       cnst = Math.PI / 180;
       this.element;
       return this.element.addEventListener('click', (function(_this) {
         return function(e) {
-          var D, N, a, ang, c, calc, f, l, len2, len3, m, n, o, results, results1;
+          var D, N, a, ang, calc, f, l, len2, len3, m, n, o, results, results1;
           e.preventDefault();
           if (_this.wrapper.classList.contains('open')) {
             _this.wrapper.classList.remove('open');
@@ -81,7 +84,7 @@
           } else {
             _this.wrapper.classList.add('open');
             l = items.length;
-            D = 2 * _this.button.radius;
+            D = 2.5 * _this.button.radius;
             N = f = 0;
             ang = _this.options.max - _this.options.min;
             calc = function() {

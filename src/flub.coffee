@@ -13,7 +13,7 @@ class Flub
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
       <defs>
         <filter id="flub-shadow">
-            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + @button.radius / 2 + '" />
+            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + @button.radius / 4 + '" />
             <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
             <feGaussianBlur in="goo" stdDeviation="3" result="shadow" />
             <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 0" result="shadow" />
@@ -22,7 +22,7 @@ class Flub
             <feBlend in2="goo" in="SourceGraphic" result="mix" />
         </filter>
         <filter id="flub-goo">
-            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + @button.radius / 2 + '" />
+            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + @button.radius / 4 + '" />
             <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
             <feBlend in2="goo" in="SourceGraphic" result="mix" />
         </filter>
@@ -44,7 +44,7 @@ class Flub
   bind: ->
     @options.min ?= 0
     @options.max ?= 360
-    @options.speed = 200
+    @options.speed ?= 200
     items = []
     @element.style.position = 'relative'
     @element.style.zIndex = 2
@@ -54,10 +54,11 @@ class Flub
         items.push i
     rect = items[0].getBoundingClientRect()
     radius = (rect.right - rect.left) / 2
+    c = 0
     for i in items
       i.style.left = (@button.left - radius) + 'px'
       i.style.top = (@button.top - radius) + 'px'
-      i.style.transition = 'all ease-out ' + @options.speed + 'ms'
+      i.style.transition = 'all ease-out ' + (@options.speed * (++c/items.length)) + 'ms'
     cnst = Math.PI / 180
     @element
     @element.addEventListener 'click', (e) =>
@@ -70,7 +71,7 @@ class Flub
       else
         @wrapper.classList.add 'open'
         l = items.length
-        D = 2 * @button.radius
+        D = 2.5 * @button.radius
         N = f = 0
         ang = @options.max-@options.min
         calc = () =>
