@@ -1,8 +1,11 @@
 class Flub
   constructor: (selector, @options = {}) ->
     @element = document.querySelector selector
-#    @init()
+    @init()
+    @
   init: ->
+    @options.angle_max ?= 360
+    @options.angle_min ?= 0
     wrapper = document.querySelector @element.getAttribute 'href'
     rect = @element.getBoundingClientRect()
     radius = (rect.right - rect.left) / 2
@@ -24,7 +27,7 @@ class Flub
       i.style.left = (button.left - radius) + 'px'
       i.style.top = (button.top - radius) + 'px'
     cnst = (Math.PI / 180)
-    @element.addEventListener 'click', (e) ->
+    @element.addEventListener 'click', (e) =>
       e.preventDefault()
       if wrapper.classList.contains 'open'
         wrapper.classList.remove 'open'
@@ -34,12 +37,12 @@ class Flub
       else
         wrapper.classList.add 'open'
         l = items.length
-        D = radius + button.radius
+        D = 2 * button.radius
         N = f = 0
-        calc = () ->
-          N = ~~(6 * ((angle_max-angle_min)/360) * (1 + D / button.radius))
+        calc = () =>
+          N = ~~(6 * ((@options.angle_max-@options.angle_min)/360) * (1 + D / button.radius))
           N = l if N > l
-          f = (angle_max - angle_min) / N
+          f = (@options.angle_max - @options.angle_min) / N
         calc()
         c = 0
         m = 0
@@ -47,10 +50,10 @@ class Flub
           if c is N
             c = 0
             m++
-            D += radius * 2
+            D += 2 * button.radius
             l -= N
             calc()
-          a = cnst * (angle_min + f * c++)
+          a = cnst * (@options.angle_min + f * c++)
           i.style.marginLeft = -(D * Math.cos a) + 'px'
           i.style.marginTop = -(D * Math.sin a) + 'px'
 
