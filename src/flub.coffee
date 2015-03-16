@@ -22,7 +22,7 @@ class Flub
             <feBlend in2="goo" in="SourceGraphic" result="mix" />
         </filter>
         <filter id="flub-goo">
-            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="5" />
+            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + @button.radius / 2 + '" />
             <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
             <feBlend in2="goo" in="SourceGraphic" result="mix" />
         </filter>
@@ -33,15 +33,17 @@ class Flub
   init: ->
     @wrapper = document.querySelector @element.getAttribute 'href'
     rect = @element.getBoundingClientRect()
+    @wrapper.style.display = 'none'
     radius = (rect.right - rect.left) / 2
     @button = {
       top: rect.top + document.body.scrollTop + radius
       left: rect.left + document.body.scrollLeft + radius
       radius: radius
     }
+    @wrapper.style.display = 'block'
   bind: ->
-    @options.angle_max ?= 360
-    @options.angle_min ?= 0
+    @options.min ?= 0
+    @options.max ?= 360
     @options.speed = 200
     items = []
     @element.style.position = 'relative'
@@ -56,7 +58,7 @@ class Flub
       i.style.left = (@button.left - radius) + 'px'
       i.style.top = (@button.top - radius) + 'px'
       i.style.transition = 'all ease-out ' + @options.speed + 'ms'
-    cnst = (Math.PI / 180)
+    cnst = Math.PI / 180
     @element
     @element.addEventListener 'click', (e) =>
       e.preventDefault()
@@ -70,7 +72,7 @@ class Flub
         l = items.length
         D = 2 * @button.radius
         N = f = 0
-        ang = @options.angle_max-@options.angle_min
+        ang = @options.max-@options.min
         calc = () =>
           N = ~~((ang / 60) * (D / (radius * 2)))
           N = l if N > l
@@ -85,8 +87,8 @@ class Flub
             D += 2 * @button.radius
             l -= N
             calc()
-          a = cnst * (@options.angle_min + f * c++)
-          i.style.marginLeft = -(D * Math.cos a) + 'px'
+          a = cnst * (@options.min + f * c++)
+          i.style.marginLeft = (D * Math.cos a) + 'px'
           i.style.marginTop = -(D * Math.sin a) + 'px'
 
 

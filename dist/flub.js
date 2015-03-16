@@ -17,7 +17,7 @@
 
     Flub.prototype.makeFilter = function() {
       var svg;
-      svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <filter id="flub-shadow"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + this.button.radius / 2 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feGaussianBlur in="goo" stdDeviation="3" result="shadow" /> <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 0" result="shadow" /> <feOffset in="shadow" dx="1" dy="1" result="shadow" /> <feBlend in2="shadow" in="goo" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> <filter id="flub-goo"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="5" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> </defs> </svg>';
+      svg = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <filter id="flub-shadow"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + this.button.radius / 2 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feGaussianBlur in="goo" stdDeviation="3" result="shadow" /> <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 0" result="shadow" /> <feOffset in="shadow" dx="1" dy="1" result="shadow" /> <feBlend in2="shadow" in="goo" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> <filter id="flub-goo"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + this.button.radius / 2 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> </defs> </svg>';
       return document.write(svg);
     };
 
@@ -25,21 +25,23 @@
       var radius, rect;
       this.wrapper = document.querySelector(this.element.getAttribute('href'));
       rect = this.element.getBoundingClientRect();
+      this.wrapper.style.display = 'none';
       radius = (rect.right - rect.left) / 2;
-      return this.button = {
+      this.button = {
         top: rect.top + document.body.scrollTop + radius,
         left: rect.left + document.body.scrollLeft + radius,
         radius: radius
       };
+      return this.wrapper.style.display = 'block';
     };
 
     Flub.prototype.bind = function() {
       var base, base1, cnst, i, items, j, k, len, len1, radius, rect, ref;
-      if ((base = this.options).angle_max == null) {
-        base.angle_max = 360;
+      if ((base = this.options).min == null) {
+        base.min = 0;
       }
-      if ((base1 = this.options).angle_min == null) {
-        base1.angle_min = 0;
+      if ((base1 = this.options).max == null) {
+        base1.max = 360;
       }
       this.options.speed = 200;
       items = [];
@@ -81,7 +83,7 @@
             l = items.length;
             D = 2 * _this.button.radius;
             N = f = 0;
-            ang = _this.options.angle_max - _this.options.angle_min;
+            ang = _this.options.max - _this.options.min;
             calc = function() {
               N = ~~((ang / 60) * (D / (radius * 2)));
               if (N > l) {
@@ -102,8 +104,8 @@
                 l -= N;
                 calc();
               }
-              a = cnst * (_this.options.angle_min + f * c++);
-              i.style.marginLeft = -(D * Math.cos(a)) + 'px';
+              a = cnst * (_this.options.min + f * c++);
+              i.style.marginLeft = (D * Math.cos(a)) + 'px';
               results1.push(i.style.marginTop = -(D * Math.sin(a)) + 'px');
             }
             return results1;
