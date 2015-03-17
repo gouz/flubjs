@@ -879,3 +879,50 @@ footer a:hover {
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) { }
 
+
+#sandbox-wheel {
+  margin: 20px auto;
+  width: 40px;
+  height:40px;
+}
+
+ul, li { padding: 0; margin: 0; list-style: none; }
+
+#sandbox-wheel a {
+  text-align: center;
+  width: 40px; height: 40px;
+  line-height: 40px;
+  background: #368Bc1; color: #FFF;
+  font-weight: bold; font-size: 16px;
+  display: inline-block;
+  text-decoration: none;
+  border-radius:100%;
+}
+#sandbox-wheel a:hover {
+  background: #333;
+  color:  #368Bc1;
+}
+
+#sandbox-wheel li a {
+  width: 30px; height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+
+  width: 40px; height: 40px;
+  line-height: 40px;
+
+}
+
+.btn {
+  padding: 5px 10px;
+  font-size: 13px;
+  line-height: 1;
+  color: #2879d0;
+  text-align: center;
+  background-color: #9ddcff;
+  background-image: none;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+}
