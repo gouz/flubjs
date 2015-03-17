@@ -3,7 +3,8 @@ var flub = new Flub('#sandbox-wheel', {
   max: 360,
   speed: 800,
   dispatch: true,
-  sync: false
+  sync: false,
+  elastic: true
 });
 var a = document.querySelector('#add'),
   ul = document.querySelector('#menu');
