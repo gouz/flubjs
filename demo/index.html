@@ -13,13 +13,31 @@
         <li><a href="#">C</a></li>
         <li><a href="#">D</a></li>
         <li><a href="#">E</a></li>
+        <li><a href="#">F</a></li>
+        <li><a href="#">G</a></li>
+        <li><a href="#">H</a></li>
+        <li><a href="#">I</a></li>
+        <li><a href="#">K</a></li>
+        <li><a href="#">L</a></li>
+        <li><a href="#">M</a></li>
+        <li><a href="#">N</a></li>
       </ul>
     </div>
+    <a href="#" id="add_child">Add Child</a>
   <script src="../dist/flub.js"></script>
   <script>
     var flub = new Flub('#sandbox-wheel', {
       speed: 800
     });
+    var a = document.querySelector('#add_child'),
+      ul = document.querySelector('#menu');
+    a.addEventListener('click', function(e) {
+      var li = document.createElement('li');
+      li.innerHTML = '<a href="#">O</a>';
+      ul.appendChild(li);
+      flub.populate();
+      return false;
+    }, false);
   </script>
   </body>
 </html>

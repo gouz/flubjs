@@ -3,7 +3,7 @@ class Flub
     flubber = document.querySelector selector
     flubber.style.position = 'relative'
     @launcher = flubber.querySelector flubber.getAttribute 'data-launcher'
-    wrapper = document.querySelector @launcher.getAttribute 'href'
+    @wrapper = document.querySelector @launcher.getAttribute 'href'
     rect = @launcher.getBoundingClientRect()
     radius = rect.width / 2
     button = {
@@ -36,33 +36,23 @@ class Flub
     @opts.min ?= 0
     @opts.max ?= 360
     @opts.speed ?= 200
-    items = []
     @launcher.style.zIndex = 2
     @launcher.style.position = 'absolute'
-    wrapper.style.position = 'absolute'
-    for i in wrapper.children
-      if i.nodeType isnt 8
-        items.push i
-    rect = items[0].getBoundingClientRect()
+    @wrapper.style.position = 'absolute'
+    @populate()
+    rect = @items[0].getBoundingClientRect()
     radius = rect.width / 2
-    c = 0
-    for i in items
-      i.style.position = 'absolute'
-      i.style.top = 0
-      i.style.left = 0
-      i.style.transition = 'all ease-out ' + (@opts.speed * (++c/items.length)) + 'ms'
-      i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)"
     cnst = Math.PI / 180
     @launcher.addEventListener 'click', (e) =>
       e.preventDefault()
-      if wrapper.classList.contains 'open'
-        wrapper.classList.remove 'open'
-        for i in items
+      if @wrapper.classList.contains 'open'
+        @wrapper.classList.remove 'open'
+        for i in @items
           i.style.left = 0
           i.style.top = 0
       else
-        wrapper.classList.add 'open'
-        l = items.length
+        @wrapper.classList.add 'open'
+        l = @items.length
         D = 2.5 * button.radius
         N = f = 0
         ang = @opts.max-@opts.min
@@ -73,7 +63,7 @@ class Flub
         calc()
         c = 0
         m = 0
-        for i in items
+        for i in @items
           if c is N
             c = 0
             m++
@@ -83,10 +73,23 @@ class Flub
           a = cnst * (@opts.min + f * c++)
           i.style.left = (D * Math.cos a) + 'px'
           i.style.top = -(D * Math.sin a) + 'px'
+      false
+    , false
     @
+  populate: ->
+    @items = []
+    c = 0
+    for i in @wrapper.children
+      if i.nodeType isnt 8
+        @items.push i
+        i.style.position = 'absolute'
+        i.style.top = 0
+        i.style.left = 0
+        i.style.transition = 'all ease-out ' + (@opts.speed * (++c/@items.length)) + 'ms'
+        i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)"
   toggle: ->
     event = document.createEvent 'HTMLEvents'
-    event.initEvent 'click', true, false
+    event.initEvent 'click', false, false
     @launcher.dispatchEvent event
 
 @Flub = Flub

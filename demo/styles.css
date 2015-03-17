@@ -10,7 +10,7 @@ body {
 
 ul, li { padding: 0; margin: 0; list-style: none; }
 
-a {
+#sandbox-wheel a {
   text-align: center;
   width: 40px; height: 40px;
   line-height: 40px;
@@ -20,12 +20,12 @@ a {
   text-decoration: none;
   border-radius:100%;
 }
-a:hover {
+#sandbox-wheel a:hover {
   background: #333;
   color:  #368Bc1;
 }
 
-li a {
+#sandbox-wheel li a {
   width: 30px; height: 30px;
   line-height: 30px;
   font-size: 12px;
