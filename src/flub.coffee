@@ -18,7 +18,6 @@ class Flub
         <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + button.radius / 4 + '" />
         <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
         <feGaussianBlur in="goo" stdDeviation="3" result="shadow" />
-        <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="shadow" />
         <feOffset in="shadow" dx="1" dy="1" result="shadow" />
         <feBlend in2="shadow" in="goo" result="goo" />
         <feBlend in2="goo" in="SourceGraphic" result="mix" />
@@ -77,6 +76,7 @@ class Flub
     , false
     @
   populate: ->
+    @wrapper.classList.remove 'open'
     @items = []
     c = 0
     for i in @wrapper.children
