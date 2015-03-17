@@ -2,6 +2,8 @@
 
 Based on the sublime work of [Lucas Bebber] and the article of [Chris Coyier], FlubJS allows to create some dynamic menu with goo effect.
 
+Demonstation : http://gouz.github.io/flubjs/
+
 ### Installation
 
 You need Gulp installed globally if you want to compile it. Else you can use the dist files.
