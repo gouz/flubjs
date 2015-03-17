@@ -1,5 +1,10 @@
 class Flub
   constructor: (selector, @opts = {}) ->
+    @opts.min ?= 0
+    @opts.max ?= 360
+    @opts.speed ?= 200
+    @opts.dispatch ?= true
+    @opts.sync ?= false
     flubber = document.querySelector selector
     flubber.style.position = 'relative'
     @launcher = flubber.querySelector flubber.getAttribute 'data-launcher'
@@ -32,9 +37,6 @@ class Flub
     '
     flubber.style.filter = 'url(#flub-shadow)'
     flubber.style.webkitFilter = 'url(#flub-shadow)'
-    @opts.min ?= 0
-    @opts.max ?= 360
-    @opts.speed ?= 200
     @launcher.style.zIndex = 2
     @launcher.style.position = 'absolute'
     @wrapper.style.position = 'absolute'
@@ -57,7 +59,7 @@ class Flub
         ang = @opts.max-@opts.min
         calc = () =>
           N = ~~((ang / 60) * (D / (radius * 2)))
-          N = l if N > l
+          N = l if N > l and @opts.dispatch
           f = ang / N
         calc()
         c = 0
@@ -78,15 +80,17 @@ class Flub
   populate: ->
     @wrapper.classList.remove 'open'
     @items = []
-    c = 0
     for i in @wrapper.children
       if i.nodeType isnt 8
         @items.push i
         i.style.position = 'absolute'
         i.style.top = 0
         i.style.left = 0
-        i.style.transition = 'all ease-out ' + (@opts.speed * (++c/@items.length)) + 'ms'
         i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)"
+    c = 0
+    for i in @wrapper.children
+      r = if @opts.sync then 1 else (++c/@items.length)
+      i.style.transition = 'all ease-out ' + (@opts.speed * r) + 'ms'
   toggle: ->
     event = document.createEvent 'HTMLEvents'
     event.initEvent 'click', false, false

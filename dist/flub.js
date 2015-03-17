@@ -3,8 +3,23 @@
 
   Flub = (function() {
     function Flub(selector, opts) {
-      var base, base1, base2, button, cnst, flubber, radius, rect;
+      var base, base1, base2, base3, base4, button, cnst, flubber, radius, rect;
       this.opts = opts != null ? opts : {};
+      if ((base = this.opts).min == null) {
+        base.min = 0;
+      }
+      if ((base1 = this.opts).max == null) {
+        base1.max = 360;
+      }
+      if ((base2 = this.opts).speed == null) {
+        base2.speed = 200;
+      }
+      if ((base3 = this.opts).dispatch == null) {
+        base3.dispatch = true;
+      }
+      if ((base4 = this.opts).sync == null) {
+        base4.sync = false;
+      }
       flubber = document.querySelector(selector);
       flubber.style.position = 'relative';
       this.launcher = flubber.querySelector(flubber.getAttribute('data-launcher'));
@@ -19,15 +34,6 @@
       document.write('<svg xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <filter id="flub-shadow"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + button.radius / 4 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feGaussianBlur in="goo" stdDeviation="3" result="shadow" /> <feOffset in="shadow" dx="1" dy="1" result="shadow" /> <feBlend in2="shadow" in="goo" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> <filter id="flub-goo"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + button.radius / 4 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> </defs> </svg>');
       flubber.style.filter = 'url(#flub-shadow)';
       flubber.style.webkitFilter = 'url(#flub-shadow)';
-      if ((base = this.opts).min == null) {
-        base.min = 0;
-      }
-      if ((base1 = this.opts).max == null) {
-        base1.max = 360;
-      }
-      if ((base2 = this.opts).speed == null) {
-        base2.speed = 200;
-      }
       this.launcher.style.zIndex = 2;
       this.launcher.style.position = 'absolute';
       this.wrapper.style.position = 'absolute';
@@ -55,7 +61,7 @@
             ang = _this.opts.max - _this.opts.min;
             calc = function() {
               N = ~~((ang / 60) * (D / (radius * 2)));
-              if (N > l) {
+              if (N > l && _this.opts.dispatch) {
                 N = l;
               }
               return f = ang / N;
@@ -85,12 +91,10 @@
     }
 
     Flub.prototype.populate = function() {
-      var c, i, j, len, ref, results;
+      var c, i, j, k, len, len1, r, ref, ref1, results;
       this.wrapper.classList.remove('open');
       this.items = [];
-      c = 0;
       ref = this.wrapper.children;
-      results = [];
       for (j = 0, len = ref.length; j < len; j++) {
         i = ref[j];
         if (i.nodeType !== 8) {
@@ -98,11 +102,16 @@
           i.style.position = 'absolute';
           i.style.top = 0;
           i.style.left = 0;
-          i.style.transition = 'all ease-out ' + (this.opts.speed * (++c / this.items.length)) + 'ms';
-          results.push(i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)");
-        } else {
-          results.push(void 0);
+          i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)";
         }
+      }
+      c = 0;
+      ref1 = this.wrapper.children;
+      results = [];
+      for (k = 0, len1 = ref1.length; k < len1; k++) {
+        i = ref1[k];
+        r = this.opts.sync ? 1 : ++c / this.items.length;
+        results.push(i.style.transition = 'all ease-out ' + (this.opts.speed * r) + 'ms');
       }
       return results;
     };
