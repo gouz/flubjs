@@ -1,80 +1,71 @@
 class Flub
-  constructor: (selector, @options = {}) ->
+  constructor: (selector, @opts = {}) ->
     flubber = document.querySelector selector
-    @element = flubber.querySelector flubber.getAttribute 'data-launcher'
-    @init()
-    @makeFilter()
-    flubber.style.filter = 'url(#flub-shadow)'
-    flubber.style.webkitFilter = 'url(#flub-shadow)'
-    @bind()
-    @
-  makeFilter: ->
-    svg = '
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-      <defs>
-        <filter id="flub-shadow">
-            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + @button.radius / 4 + '" />
-            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-            <feGaussianBlur in="goo" stdDeviation="3" result="shadow" />
-            <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 0" result="shadow" />
-            <feOffset in="shadow" dx="1" dy="1" result="shadow" />
-            <feBlend in2="shadow" in="goo" result="goo" />
-            <feBlend in2="goo" in="SourceGraphic" result="mix" />
-        </filter>
-        <filter id="flub-goo">
-            <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + @button.radius / 4 + '" />
-            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-            <feBlend in2="goo" in="SourceGraphic" result="mix" />
-        </filter>
-      </defs>
-    </svg>
-    '
-    document.write svg
-  init: ->
-    @wrapper = document.querySelector @element.getAttribute 'href'
-    rect = @element.getBoundingClientRect()
-    @wrapper.style.display = 'none'
-    radius = (rect.right - rect.left) / 2
-    @button = {
-      top: rect.top + document.body.scrollTop + radius
-      left: rect.left + document.body.scrollLeft + radius
+    flubber.style.position = 'relative'
+    @launcher = flubber.querySelector flubber.getAttribute 'data-launcher'
+    wrapper = document.querySelector @launcher.getAttribute 'href'
+    rect = @launcher.getBoundingClientRect()
+    radius = rect.width / 2
+    button = {
+      top: rect.top + document.body.scrollTop
+      left: rect.left + document.body.scrollLeft
       radius: radius
     }
-    @wrapper.style.display = 'block'
-  bind: ->
-    @options.min ?= 0
-    @options.max ?= 360
-    @options.speed ?= 200
+    document.write '
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <filter id="flub-shadow">
+        <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + button.radius / 4 + '" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+        <feGaussianBlur in="goo" stdDeviation="3" result="shadow" />
+        <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="shadow" />
+        <feOffset in="shadow" dx="1" dy="1" result="shadow" />
+        <feBlend in2="shadow" in="goo" result="goo" />
+        <feBlend in2="goo" in="SourceGraphic" result="mix" />
+    </filter>
+    <filter id="flub-goo">
+        <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + button.radius / 4 + '" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+        <feBlend in2="goo" in="SourceGraphic" result="mix" />
+    </filter>
+  </defs>
+</svg>
+    '
+    flubber.style.filter = 'url(#flub-shadow)'
+    flubber.style.webkitFilter = 'url(#flub-shadow)'
+    @opts.min ?= 0
+    @opts.max ?= 360
+    @opts.speed ?= 200
     items = []
-    @element.style.position = 'relative'
-    @element.style.zIndex = 2
-    for i in @wrapper.children
+    @launcher.style.zIndex = 2
+    @launcher.style.position = 'absolute'
+    wrapper.style.position = 'absolute'
+    for i in wrapper.children
       if i.nodeType isnt 8
-        i.style.position = 'absolute'
         items.push i
     rect = items[0].getBoundingClientRect()
-    radius = (rect.right - rect.left) / 2
+    radius = rect.width / 2
     c = 0
     for i in items
-      i.style.left = (@button.left - radius) + 'px'
-      i.style.top = (@button.top - radius) + 'px'
-      i.style.transition = 'all ease-out ' + (@options.speed * (++c/items.length)) + 'ms'
-      i.style.transitionTimingFunction = "cubic-bezier(0.935, 0.000, 0.340, 1.330)"
+      i.style.position = 'absolute'
+      i.style.top = 0
+      i.style.left = 0
+      i.style.transition = 'all ease-out ' + (@opts.speed * (++c/items.length)) + 'ms'
+      i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)"
     cnst = Math.PI / 180
-    @element
-    @element.addEventListener 'click', (e) =>
+    @launcher.addEventListener 'click', (e) =>
       e.preventDefault()
-      if @wrapper.classList.contains 'open'
-        @wrapper.classList.remove 'open'
+      if wrapper.classList.contains 'open'
+        wrapper.classList.remove 'open'
         for i in items
-          i.style.marginLeft = 0
-          i.style.marginTop = 0
+          i.style.left = 0
+          i.style.top = 0
       else
-        @wrapper.classList.add 'open'
+        wrapper.classList.add 'open'
         l = items.length
-        D = 2.5 * @button.radius
+        D = 2.5 * button.radius
         N = f = 0
-        ang = @options.max-@options.min
+        ang = @opts.max-@opts.min
         calc = () =>
           N = ~~((ang / 60) * (D / (radius * 2)))
           N = l if N > l
@@ -86,12 +77,16 @@ class Flub
           if c is N
             c = 0
             m++
-            D += 2 * @button.radius
+            D += 2 * button.radius
             l -= N
             calc()
-          a = cnst * (@options.min + f * c++)
-          i.style.marginLeft = (D * Math.cos a) + 'px'
-          i.style.marginTop = -(D * Math.sin a) + 'px'
-
+          a = cnst * (@opts.min + f * c++)
+          i.style.left = (D * Math.cos a) + 'px'
+          i.style.top = -(D * Math.sin a) + 'px'
+    @
+  toggle: ->
+    event = document.createEvent 'HTMLEvents'
+    event.initEvent 'click', true, false
+    @launcher.dispatchEvent event
 
 @Flub = Flub
