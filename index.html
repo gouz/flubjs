@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Flubjs by gouz</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Flubjs</h1>
+        <h2>Dynamic goo menu like</h2>
+        <a href="https://github.com/gouz/flubjs" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="flubjs" class="anchor" href="#flubjs" aria-hidden="true"><span class="octicon octicon-link"></span></a>FlubJS</h1>
+
+<p>Base on the sublime work of <a href="http://twitter.com/lucasbebber">Lucas Bebber</a> and the article of <a href="https://css-tricks.com/gooey-effect">Chris Coyier</a>, FlubJS allows to create some dynamic menu with goo effect.</p>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<p>You need Gulp installed globally if you want to compile it. Else you can use the dist files.</p>
+
+<div class="highlight highlight-sh"><pre>$ npm i -g gulp</pre></div>
+
+<div class="highlight highlight-sh"><pre>$ git clone git@github.com:gouz/flubjs.git
+$ <span class="pl-s3">cd</span> flubjs
+$ npm i -d
+$ gulp</pre></div>
+
+<h3>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use it</h3>
+
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> Flub <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">FlubJS</span>(<span class="pl-s1"><span class="pl-pds">'</span>#selector<span class="pl-pds">'</span></span>, options);</pre></div>
+
+<p>Default options values :</p>
+
+<ul>
+<li>
+<em>min</em> : 0 ; angle start ( from 0 to 360 )</li>
+<li>
+<em>max</em> : 360 ; angle end ( from 0 to 360 )</li>
+<li>
+<em>speed</em> : 200 ; time in ms of animation complete</li>
+<li>
+<em>dispatch</em> : true ; dispatch elements on the perimeter or arc</li>
+<li>
+<em>sync</em> : false ; sync animation of elements</li>
+</ul>
+
+<p>Sample :</p>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>sandbox<span class="pl-pds">"</span></span> <span class="pl-e">data-launcher</span>=<span class="pl-s1"><span class="pl-pds">"</span>#launcher<span class="pl-pds">"</span></span>&gt;
+    &lt;<span class="pl-ent">a</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>launcher<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s1"><span class="pl-pds">"</span>#menu<span class="pl-pds">"</span></span>&gt;A&lt;/<span class="pl-ent">a</span>&gt;
+    &lt;<span class="pl-ent">ul</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>menu<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s1"><span class="pl-pds">"</span>#<span class="pl-pds">"</span></span>&gt;B&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+        &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s1"><span class="pl-pds">"</span>#<span class="pl-pds">"</span></span>&gt;C&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+        &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span> <span class="pl-e">href</span>=<span class="pl-s1"><span class="pl-pds">"</span>#<span class="pl-pds">"</span></span>&gt;D&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+    &lt;/<span class="pl-ent">ul</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<ul>
+<li>
+<strong>data-launcher</strong> define the items which is the main button</li>
+<li>
+<strong>#launcher : href</strong> define the id of DOM element which contains the items</li>
+</ul>
+
+<div class="highlight highlight-js"><pre>  <span class="pl-s">var</span> flub <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Flub</span>(<span class="pl-s1"><span class="pl-pds">'</span>#sandbox<span class="pl-pds">'</span></span>, {
+      speed<span class="pl-k">:</span> <span class="pl-c1">800</span>,
+      dispatch<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+      sync<span class="pl-k">:</span> <span class="pl-c1">false</span>
+    });</pre></div>
+
+<p>Some skin ?</p>
+
+<div class="highlight highlight-css"><pre><span class="pl-e">#sandbox</span> {
+  <span class="pl-mp"><span class="pl-s3">width</span></span>: <span class="pl-c1">40<span class="pl-k">px</span></span>;
+  <span class="pl-mp"><span class="pl-s3">height</span></span>:<span class="pl-c1">40<span class="pl-k">px</span></span>;
+}
+
+<span class="pl-e">#sandbox</span> <span class="pl-ent">a</span> {
+  <span class="pl-mp"><span class="pl-s3">text-align</span></span>: <span class="pl-sc">center</span>;
+  <span class="pl-mp"><span class="pl-s3">width</span></span>: <span class="pl-c1">40<span class="pl-k">px</span></span>; <span class="pl-mp"><span class="pl-s3">height</span></span>: <span class="pl-c1">40<span class="pl-k">px</span></span>;
+  <span class="pl-mp"><span class="pl-s3">line-height</span></span>: <span class="pl-c1">40<span class="pl-k">px</span></span>;
+  <span class="pl-mp"><span class="pl-s3">background</span></span>: <span class="pl-c1">#368Bc1</span>; <span class="pl-mp"><span class="pl-s3">color</span></span>: <span class="pl-c1">#FFF</span>;
+  <span class="pl-mp"><span class="pl-s3">font-weight</span></span>: <span class="pl-sc">bold</span>; <span class="pl-mp"><span class="pl-s3">font-size</span></span>: <span class="pl-c1">16<span class="pl-k">px</span></span>;
+  <span class="pl-mp"><span class="pl-s3">display</span></span>: <span class="pl-sc">inline-block</span>;
+  <span class="pl-mp"><span class="pl-s3">text-decoration</span></span>: <span class="pl-sc">none</span>;
+  <span class="pl-mp"><span class="pl-s3">border-radius</span></span>:<span class="pl-c1">100<span class="pl-k">%</span></span>;
+}
+<span class="pl-e">#sandbox</span> <span class="pl-ent">a</span><span class="pl-e">:hover</span> {
+  <span class="pl-mp"><span class="pl-s3">background</span></span>: <span class="pl-c1">#333</span>;
+  <span class="pl-mp"><span class="pl-s3">color</span></span>:  <span class="pl-c1">#368Bc1</span>;
+}</pre></div>
+
+<h3>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h3>
+
+<p>FlubJS allows to control your menu with some methods :</p>
+
+<ul>
+<li>toggle() : open/close menu</li>
+</ul>
+
+<div class="highlight highlight-js"><pre>flub.toggle();</pre></div>
+
+<ul>
+<li>populate() : take new items (dynamicaly added) of the menu</li>
+</ul>
+
+<div class="highlight highlight-js"><pre>flub.populate();</pre></div>
+
+<h3>
+<a id="browser-compat" class="anchor" href="#browser-compat" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser Compat</h3>
+
+<ul>
+<li>IE 10</li>
+<li>Recent Chrome and Firefox</li>
+</ul>
+
+<h3>
+<a id="todos" class="anchor" href="#todos" aria-hidden="true"><span class="octicon octicon-link"></span></a>Todo's</h3>
+
+<ul>
+<li>Write Tests</li>
+<li>Add Code Comments</li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>MIT</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/gouz/flubjs/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/gouz/flubjs/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/gouz/flubjs"></a> is maintained by <a href="https://github.com/gouz">gouz</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-45154478-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
