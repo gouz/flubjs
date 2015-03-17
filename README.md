@@ -29,6 +29,7 @@ Default options values :
 - *speed* : 200 ; time in ms of animation complete
 - *dispatch* : true ; dispatch elements on the perimeter or arc
 - *sync* : false ; sync animation of elements
+- *elastic* : false ; elastic animation
 
 Sample :
 ```html

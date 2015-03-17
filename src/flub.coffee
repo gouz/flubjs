@@ -5,6 +5,7 @@ class Flub
     @opts.speed ?= 200
     @opts.dispatch ?= true
     @opts.sync ?= false
+    @opts.elastic ?= false
     flubber = document.querySelector selector
     flubber.style.position = 'relative'
     @launcher = flubber.querySelector flubber.getAttribute 'data-launcher'
@@ -86,11 +87,11 @@ class Flub
         i.style.position = 'absolute'
         i.style.top = 0
         i.style.left = 0
-        i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)"
     c = 0
     for i in @wrapper.children
       r = if @opts.sync then 1 else (++c/@items.length)
       i.style.transition = 'all ease-out ' + (@opts.speed * r) + 'ms'
+      i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)" if @opts.elastic
   toggle: ->
     event = document.createEvent 'HTMLEvents'
     event.initEvent 'click', false, false

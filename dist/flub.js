@@ -3,7 +3,7 @@
 
   Flub = (function() {
     function Flub(selector, opts) {
-      var base, base1, base2, base3, base4, button, cnst, flubber, radius, rect;
+      var base, base1, base2, base3, base4, base5, button, cnst, flubber, radius, rect;
       this.opts = opts != null ? opts : {};
       if ((base = this.opts).min == null) {
         base.min = 0;
@@ -19,6 +19,9 @@
       }
       if ((base4 = this.opts).sync == null) {
         base4.sync = false;
+      }
+      if ((base5 = this.opts).elastic == null) {
+        base5.elastic = false;
       }
       flubber = document.querySelector(selector);
       flubber.style.position = 'relative';
@@ -102,7 +105,6 @@
           i.style.position = 'absolute';
           i.style.top = 0;
           i.style.left = 0;
-          i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)";
         }
       }
       c = 0;
@@ -111,7 +113,12 @@
       for (k = 0, len1 = ref1.length; k < len1; k++) {
         i = ref1[k];
         r = this.opts.sync ? 1 : ++c / this.items.length;
-        results.push(i.style.transition = 'all ease-out ' + (this.opts.speed * r) + 'ms');
+        i.style.transition = 'all ease-out ' + (this.opts.speed * r) + 'ms';
+        if (this.opts.elastic) {
+          results.push(i.style.transitionTimingFunction = "cubic-bezier(0.66,-0.07, 0.06, 1.55)");
+        } else {
+          results.push(void 0);
+        }
       }
       return results;
     };
