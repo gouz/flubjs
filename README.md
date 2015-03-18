@@ -22,7 +22,7 @@ $ gulp
 ### How to use it
 
 ```js
-var Flub = new FlubJS('#selector', options);
+var myflub = new Flub('#selector', options);
 ```
 Default options values :
 
