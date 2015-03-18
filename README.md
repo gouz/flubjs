@@ -2,7 +2,7 @@
 
 Based on the sublime work of [Lucas Bebber] and his article on [Chris Coyier CSS-tricks], FlubJS allows to create some dynamic menu with goo effect.
 
-Demonstation : http://gouz.github.io/flubjs/
+Demonstration : http://gouz.github.io/flubjs/
 
 ### Installation
 
