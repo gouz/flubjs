@@ -1,6 +1,6 @@
 # FlubJS
 
-Based on the sublime work of [Lucas Bebber] and the article of [Chris Coyier], FlubJS allows to create some dynamic menu with goo effect.
+Based on the sublime work of [Lucas Bebber] and his article on [Chris Coyier CSS-tricks], FlubJS allows to create some dynamic menu with goo effect.
 
 Demonstation : http://gouz.github.io/flubjs/
 
@@ -107,4 +107,4 @@ License
 MIT
 
 [Lucas Bebber]:http://twitter.com/lucasbebber
-[Chris Coyier]:https://css-tricks.com/gooey-effect
+[Chris Coyier CSS-tricks]:https://css-tricks.com/gooey-effect
