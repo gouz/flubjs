@@ -3,7 +3,7 @@
 
   Flub = (function() {
     function Flub(selector, opts) {
-      var base, base1, base2, base3, base4, base5, button, cnst, flubber, radius, rect;
+      var base, base1, base2, base3, base4, base5, base6, blur, button, cnst, flubber, radius, rect;
       this.opts = opts != null ? opts : {};
       if ((base = this.opts).min == null) {
         base.min = 0;
@@ -23,6 +23,9 @@
       if ((base5 = this.opts).elastic == null) {
         base5.elastic = false;
       }
+      if ((base6 = this.opts).blur == null) {
+        base6.blur = true;
+      }
       flubber = document.querySelector(selector);
       flubber.style.position = 'relative';
       this.launcher = flubber.querySelector(flubber.getAttribute('data-launcher'));
@@ -34,7 +37,9 @@
         left: rect.left + document.body.scrollLeft,
         radius: radius
       };
-      document.write('<svg xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <filter id="flub-shadow"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + button.radius / 4 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feGaussianBlur in="goo" stdDeviation="3" result="shadow" /> <feOffset in="shadow" dx="1" dy="1" result="shadow" /> <feBlend in2="shadow" in="goo" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> <filter id="flub-goo"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + button.radius / 4 + '" /> <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> </defs> </svg>');
+      blur = this.opts.blur ? '1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7' : '0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 0';
+      blur = '<feColorMatrix in="blur" mode="matrix" values="' + blur + '" result="goo" />';
+      document.write('<svg xmlns="http://www.w3.org/2000/svg" version="1.1"> <defs> <filter id="flub-shadow"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + button.radius / 4 + '" />' + blur + '<feGaussianBlur in="goo" stdDeviation="3" result="shadow" /> <feOffset in="shadow" dx="1" dy="1" result="shadow" /> <feBlend in2="shadow" in="goo" result="goo" /> <feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> <filter id="flub-goo"> <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="' + button.radius / 4 + '" />' + blur + '<feBlend in2="goo" in="SourceGraphic" result="mix" /> </filter> </defs> </svg>');
       flubber.style.filter = 'url(#flub-shadow)';
       flubber.style.webkitFilter = 'url(#flub-shadow)';
       this.launcher.style.zIndex = 2;

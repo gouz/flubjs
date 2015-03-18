@@ -32,6 +32,7 @@ Default options values :
 - *dispatch* : true ; dispatch elements on the perimeter or arc
 - *sync* : false ; sync animation of elements
 - *elastic* : false ; elastic animation
+- *blur* : true ; blur on items
 
 Sample :
 ```html
