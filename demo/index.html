@@ -30,7 +30,7 @@
       min: 0,
       max: 360,
       speed: 800,
-      dispatch: false,
+      dispatch: true,
       sync: false,
       blur: true
     });
@@ -40,7 +40,7 @@
       var li = document.createElement('li');
       li.innerHTML = '<a href="#">O</a>';
       ul.appendChild(li);
-      flub.populate();
+      flub.populate().position();
       return false;
     }, false);
   </script>

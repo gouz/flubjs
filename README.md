@@ -93,6 +93,17 @@ flub.toggle();
 flub.populate();
 ```
 
+- position() : position the items
+```js
+flub.position();
+```
+
+Since 0.0.4 you can chain the methods
+```js
+flub.populate().position();
+```
+
+
 ### Browser Compat
 - IE 10
 - Recent Chrome and Firefox
