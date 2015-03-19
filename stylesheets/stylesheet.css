@@ -906,7 +906,6 @@ ul, li { padding: 0; margin: 0; list-style: none; }
 #sandbox-wheel li a {
   width: 30px; height: 30px;
   line-height: 30px;
-  font-size: 12px;
 
   width: 40px; height: 40px;
   line-height: 40px;
@@ -924,5 +923,5 @@ ul, li { padding: 0; margin: 0; list-style: none; }
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
 }
