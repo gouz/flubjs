@@ -12,6 +12,6 @@ a.addEventListener('click', function(e) {
   var li = document.createElement('li');
   li.innerHTML = '<a href="#">O</a>';
   ul.appendChild(li);
-  flub.populate();
+  flub.populate().position();
   return false;
 }, false);
